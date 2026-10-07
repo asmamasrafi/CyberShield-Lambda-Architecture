@@ -80,6 +80,55 @@ This architecture makes it possible to combine:
 
 ---
 
+# 📊 Security Monitoring Dashboard
+
+CyberShield provides a web-based security dashboard for visualizing
+real-time and historical threat intelligence.
+
+## Dashboard Overview
+
+The main dashboard provides a consolidated view of security indicators,
+historical analyses and critical threat information.
+
+![CyberShield Dashboard Overview](screenshots/01-dashboard-overview.png)
+
+## 🌍 Global Threat Map
+
+Interactive visualization of threat origins and attack clusters.
+
+![Global Threat Map](screenshots/02-global-threat-map.png)
+
+## ⚡ Real-Time Monitoring — Speed Layer
+
+The Speed Layer interface provides real-time visibility into incoming
+security events and filtering actions.
+
+![Speed Layer Monitoring](screenshots/03-speed-layer-monitoring.png)
+
+## 🚨 Critical IP Investigation
+
+Example of an IP classified as `BLACKLISTED` with a high threat score.
+
+![Critical IP Investigation](screenshots/04-critical-ip-blacklisted.png)
+
+## ✅ Legitimate Host Investigation
+
+Example of a legitimate host classified as `CLEAN`.
+
+![Clean Host Investigation](screenshots/05-legitimate-ip-clean.png)
+
+## 📦 Batch Analytics
+
+Historical security indicators generated through the Batch Layer.
+
+![Batch Analytics](screenshots/06-batch-analytics.png)
+
+## 📈 Threat Timeline
+
+Historical aggregation of threat volumes and critical security events.
+
+![Threat Timeline](screenshots/07-threat-timeline.png)
+
 # ⚡ Speed Layer — Real-Time Detection
 
 The **Speed Layer** is responsible for processing security events as they arrive.
