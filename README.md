@@ -1,68 +1,92 @@
-# 🛡️ CyberShield — Real-Time Cyber Threat Detection
+# 🛡️ CyberShield — Lambda Architecture for Cybersecurity Monitoring
 
-A cybersecurity monitoring platform combining **Lambda Architecture**, **real-time stream processing**, **batch analysis**, and **machine learning** to detect and analyze potentially malicious network activity.
+**CyberShield** is a cybersecurity and Big Data project designed to explore **real-time security event processing, threat detection, machine learning classification, and security monitoring** using a Lambda Architecture.
 
-The project combines a **Speed Layer** for real-time threat detection with a **Batch Layer** for historical analysis and a web dashboard for security monitoring.
+The project combines a **Speed Layer** for real-time detection with a **Batch Layer** for historical analysis.
+
+```text
+                    SECURITY EVENTS
+                          │
+             ┌────────────┴────────────┐
+             │                         │
+             ▼                         ▼
+      ⚡ SPEED LAYER              📦 BATCH LAYER
+      Real-Time Processing        Historical Analysis
+             │                         │
+          Kafka                    Batch Data
+             │                         │
+      Spark Streaming          Data Processing / ML
+             │                         │
+      Threat Detection              Historical
+          + ML                       Insights
+             │
+             ▼
+         Cassandra
+             │
+             ▼
+      Security Dashboard
+```
 
 ---
 
-## 🎯 Project Overview
+# 🎯 Project Objectives
 
-CyberShield is designed as a cybersecurity monitoring and threat detection pipeline capable of processing security events in real time.
+The main objective of CyberShield is to demonstrate how **distributed data-processing technologies can be applied to cybersecurity monitoring**.
 
-The system combines:
+The project focuses on:
 
-- Real-time event processing
-- Historical batch analysis
-- Threat classification using machine learning
-- Alert storage
-- Security monitoring dashboard
-- Distributed data processing
-
-The main objective is to demonstrate how Big Data technologies can be applied to **cybersecurity monitoring and threat detection**.
+* ⚡ Real-time security event processing
+* 🔎 Threat detection and classification
+* 🤖 Machine learning for security data
+* 📊 Historical security analysis
+* 💾 Distributed threat storage
+* 📈 Security monitoring dashboards
+* 🏗️ Lambda Architecture principles
 
 ---
 
-# 🏗️ Lambda Architecture
+# 🏗️ Architecture Overview
 
-The project follows a simplified **Lambda Architecture** combining two processing paths:
+CyberShield follows a simplified **Lambda Architecture**, combining real-time stream processing with historical batch processing.
 
 ```text
                          Security Events
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │   Event / Log Data  │
-                    └──────────┬──────────┘
-                               │
-                ┌──────────────┴──────────────┐
-                │                             │
-                ▼                             ▼
-       ┌─────────────────┐           ┌─────────────────┐
-       │   Speed Layer   │           │   Batch Layer   │
-       │                 │           │                 │
-       │ Kafka           │           │ Historical Logs │
-       │ Spark Streaming │           │ Batch Analysis  │
-       │ ML Detection    │           │ ML Analysis     │
-       └────────┬────────┘           └────────┬────────┘
-                │                             │
-                ▼                             ▼
-       ┌─────────────────┐           ┌─────────────────┐
-       │    Cassandra    │           │ Historical Data │
-       │ Active Threats  │           │    Analysis     │
-       └────────┬────────┘           └─────────────────┘
-                │
-                ▼
-       ┌─────────────────────────────┐
-       │       Security Dashboard    │
-       │                             │
-       │ Alerts • Threats • Monitoring│
-       └─────────────────────────────┘
-⚡ Speed Layer — Real-Time Detection
+                                │
+               ┌────────────────┴────────────────┐
+               │                                 │
+               ▼                                 ▼
+        ⚡ Speed Layer                       📦 Batch Layer
+        Real-Time Events                   Historical Data
+               │                                 │
+               ▼                                 ▼
+            Kafka                         Batch Processing
+               │                                 │
+               ▼                                 ▼
+       Spark Streaming                    Data Analysis
+               │                                 │
+               ▼                                 ▼
+      Threat Detection / ML              Historical Insights
+               │
+               ▼
+           Cassandra
+               │
+               ▼
+      Security Dashboard
+```
 
-The Speed Layer is responsible for processing security events as they arrive.
+This architecture makes it possible to combine:
 
-Pipeline
+**Real-Time Detection + Historical Analysis + Security Monitoring**
+
+---
+
+# ⚡ Speed Layer — Real-Time Detection
+
+The **Speed Layer** is responsible for processing security events as they arrive.
+
+## 🔄 Real-Time Pipeline
+
+```text
 Log Simulator
       ↓
     Kafka
@@ -74,121 +98,180 @@ Threat Detection / ML
   Cassandra
       ↓
 Security Dashboard
+```
 
-The real-time pipeline uses:
+### Core Components
 
-Apache Kafka for event streaming
-Apache Spark Streaming for distributed stream processing
-Cassandra for storing detected threats
-Machine Learning for traffic/threat classification
+| Component                  | Role                            |
+| -------------------------- | ------------------------------- |
+| **Apache Kafka**           | Security event streaming        |
+| **Apache Spark Streaming** | Distributed stream processing   |
+| **Machine Learning**       | Traffic / threat classification |
+| **Apache Cassandra**       | Storage of detected threats     |
+| **Dashboard**              | Security monitoring             |
 
-Detected events are stored in the active_threats Cassandra table.
+Detected events are stored in the Cassandra `active_threats` table.
 
-📦 Batch Layer — Historical Analysis
+---
 
-The Batch Layer processes historical security data to identify broader trends and patterns.
+# 📦 Batch Layer — Historical Analysis
 
-This layer complements the Speed Layer by providing analysis over previously collected events.
+The **Batch Layer** processes historical security data to identify broader trends and patterns.
 
+```text
 Historical Security Logs
           ↓
      Batch Processing
           ↓
- Data Analysis / ML
+    Data Analysis / ML
           ↓
- Historical Insights
+   Historical Insights
+```
 
-This separation makes it possible to combine:
+The Batch Layer complements the Speed Layer by providing analysis over previously collected security events.
 
-Real-time detection
-Historical analysis
-Long-term threat investigation
-🤖 Machine Learning
+This separation allows the project to explore:
 
-The project includes a machine-learning component for classifying network/security traffic.
+* 📊 Historical threat analysis
+* 🔎 Long-term security patterns
+* 🤖 Offline machine-learning analysis
+* ⚡ Real-time threat detection
 
-The ML workflow includes:
+---
 
+# 🤖 Machine Learning Pipeline
+
+CyberShield includes a machine-learning component for classifying network and security traffic.
+
+The ML workflow follows:
+
+```text
 Security Data
-     ↓
+      ↓
 Data Preparation
-     ↓
+      ↓
 Feature Processing
-     ↓
+      ↓
 Model Training
-     ↓
+      ↓
 Threat Classification
-     ↓
+      ↓
 Detection Pipeline
+```
 
 The trained model is integrated into the detection workflow through the Python ML service.
 
+### ML Components
+
 The repository includes:
 
-ml_service.py
-app.py
-best_model.pkl
-Jupyter notebook for experimentation
-🚨 Threat Detection
+* `ml_service.py` — ML service
+* `app.py` — Application / API component
+* `best_model.pkl` — Trained model
+* `Untitled1.ipynb` — ML experimentation notebook
 
-The system associates detected events with security information such as:
+---
 
-Source IP address
-Attack type
-Threat score
-Last observed timestamp
+# 🚨 Threat Detection
 
-Detected threats are stored in Cassandra using the following structure:
+The detection pipeline associates security events with relevant threat information.
 
+Each detected event can include:
+
+* 🌐 Source IP address
+* 🏷️ Attack type
+* 📊 Threat score
+* 🕒 Last observed timestamp
+
+## Cassandra Data Model
+
+```text
 active_threats
+│
 ├── ip_source
 ├── attack_type
 ├── threat_score
 └── last_seen
+```
 
-This allows the dashboard to retrieve and display active security alerts.
+The `active_threats` table provides a persistent representation of detected threats that can be consumed by the monitoring dashboard.
 
-📊 Security Monitoring Dashboard
+---
 
-The project includes a web dashboard for visualizing detected threats.
+# 📊 Security Monitoring Dashboard
 
-The dashboard is implemented using:
+CyberShield includes a web-based dashboard designed to visualize security events and detected threats.
 
-React
-Vite
+### Frontend Stack
 
-It is designed to provide a monitoring interface for security events and alerts generated by the detection pipeline.
+* **React**
+* **Vite**
 
-🛠️ Technology Stack
-Cybersecurity
+The dashboard provides a monitoring interface for security information generated by the detection pipeline.
+
+```text
 Threat Detection
+       ↓
+   Cassandra
+       ↓
+Dashboard Backend
+       ↓
+ React / Vite
+       ↓
 Security Monitoring
-Intrusion Detection
-Security Event Analysis
-Threat Classification
-Big Data
-Apache Kafka
-Apache Spark
-Spark Streaming
-Apache Cassandra
-Machine Learning
-Python
-Scikit-learn
-Model training
-Traffic classification
-Web
-React
-Vite
-Infrastructure
-Docker
-Docker Compose
-Development
-Java
-Python
-Maven
-Jupyter Notebook
-Git / GitHub
-📂 Project Structure
+```
+
+---
+
+# 🛠️ Technology Stack
+
+## 🛡️ Cybersecurity
+
+* Threat Detection
+* Security Monitoring
+* Intrusion Detection
+* Security Event Analysis
+* Threat Classification
+
+## 📊 Big Data
+
+* **Apache Kafka**
+* **Apache Spark**
+* **Spark Streaming**
+* **Apache Cassandra**
+* Lambda Architecture
+
+## 🤖 Machine Learning
+
+* **Python**
+* **Scikit-learn**
+* Feature processing
+* Model training
+* Traffic classification
+
+## 🌐 Web
+
+* **React**
+* **Vite**
+
+## 🐳 Infrastructure
+
+* **Docker**
+* **Docker Compose**
+
+## 💻 Development
+
+* **Java**
+* **Python**
+* **Maven**
+* **Jupyter Notebook**
+* **Git / GitHub**
+
+---
+
+# 📂 Project Structure
+
+```text
 CyberShield-Lambda-Architecture/
 │
 ├── batch part/
@@ -198,64 +281,84 @@ CyberShield-Lambda-Architecture/
 │   └── Real-time Spark + Kafka processing
 │
 ├── frontend/
-│   └── React/Vite security dashboard
+│   └── React / Vite security dashboard
 │
 ├── app.py
-│
 ├── ml_service.py
-│
 ├── best_model.pkl
-│
 ├── Untitled1.ipynb
-│
 ├── requirements.txt
-│
 └── README.md
-🚀 Getting Started
-Prerequisites
+```
+
+---
+
+# 🚀 Getting Started
+
+## Prerequisites
 
 Make sure the following tools are installed:
 
-Docker Desktop
-Docker Compose
-Java
-Maven
-Python
-Node.js / npm
-1. Clone the repository
+* **Docker Desktop**
+* **Docker Compose**
+* **Java**
+* **Maven**
+* **Python**
+* **Node.js / npm**
+
+---
+
+## 1. Clone the Repository
+
+```bash
 git clone https://github.com/asmamasrafi/CyberShield-Lambda-Architecture.git
 
 cd CyberShield-Lambda-Architecture
-2. Start the Infrastructure
+```
+
+---
+
+## 2. Start the Infrastructure
 
 Make sure Docker Desktop is running.
 
 From the project root:
 
+```bash
 docker compose up -d
+```
 
 This starts the infrastructure required by the real-time processing pipeline.
 
-🗄️ Cassandra Configuration
+---
+
+# 🗄️ Cassandra Configuration
 
 Once the containers are running, connect to Cassandra:
 
+```bash
 docker exec -it speed-layer-spark-consumer-cassandra-1 cqlsh
+```
 
 Create the cybersecurity keyspace:
 
+```sql
 CREATE KEYSPACE IF NOT EXISTS cybersecurity
 WITH replication = {
     'class': 'SimpleStrategy',
     'replication_factor': 1
 };
+```
 
 Select the keyspace:
 
+```sql
 USE cybersecurity;
+```
 
-Create the active threats table:
+Create the `active_threats` table:
 
+```sql
 CREATE TABLE IF NOT EXISTS active_threats (
     ip_source text,
     attack_type text,
@@ -263,18 +366,27 @@ CREATE TABLE IF NOT EXISTS active_threats (
     last_seen timestamp,
     PRIMARY KEY (ip_source, attack_type)
 );
+```
 
 Exit Cassandra:
 
+```text
 exit
-⚡ Start the Spark Streaming Consumer
+```
+
+---
+
+# ⚡ Start the Spark Streaming Consumer
 
 Navigate to the stream-processing directory:
 
+```bash
 cd stream-processing
+```
 
-The Spark consumer can then be submitted through Docker:
+The Spark consumer can be submitted through Docker:
 
+```bash
 docker run -it --rm \
 --network speed-layer-spark-consumer_default \
 -v "${PWD}:/app" \
@@ -288,16 +400,23 @@ apache/spark:3.5.1 \
 org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,\
 com.datastax.spark:spark-cassandra-connector_2.12:3.5.0 \
 /app/target/speed-layer-spark-consumer-1.0-SNAPSHOT.jar
-📡 Simulate Security Events
+```
 
-The project uses a Java log simulator to generate security events.
+---
 
-The simulator uses the security log dataset:
+# 📡 Simulate Security Events
 
+The project uses a Java-based **Log Simulator** to generate security events.
+
+The simulator uses:
+
+```text
 cybersecurity_threat_detection_logs.csv
+```
 
-Run the LogSimulator Java class to send simulated events into the Kafka pipeline.
+The generated events are sent to Kafka and processed by the Spark Streaming pipeline.
 
+```text
 Log Simulator
       ↓
     Kafka
@@ -307,95 +426,254 @@ Spark Streaming
 Threat Detection
       ↓
 Cassandra
-🔍 Verify Detected Threats
+```
 
-To inspect the threats stored in Cassandra:
+Run the `LogSimulator` Java class to start generating events.
 
+---
+
+# 🔍 Verify Detected Threats
+
+To inspect detected threats stored in Cassandra:
+
+```bash
 docker exec -it speed-layer-spark-consumer-cassandra-1 \
 cqlsh -e "SELECT * FROM cybersecurity.active_threats;"
+```
 
-The results can then be consumed by the dashboard backend.
+This allows the stored threat records to be inspected directly before they are consumed by the monitoring layer.
 
-📈 Security Monitoring Workflow
+---
 
-The complete monitoring workflow can be summarized as:
+# 📈 End-to-End Security Workflow
 
+The complete workflow can be summarized as:
+
+```text
 Security Events
       ↓
 Event Streaming
       ↓
-Kafka
+     Kafka
       ↓
 Spark Streaming
       ↓
 Threat Classification
       ↓
-Threat Score
+  Threat Score
       ↓
-Cassandra
+   Cassandra
       ↓
-Dashboard
+   Dashboard
       ↓
 Security Monitoring
-🧪 Project Objectives
+```
 
-This project was developed to explore the application of distributed data-processing technologies to cybersecurity.
+---
 
-The main objectives were:
+# 🧪 Security Monitoring Workflow
 
-Build a real-time security monitoring pipeline
-Process security events using Kafka and Spark
-Store active threats in Cassandra
-Apply machine learning to security data
-Combine real-time and historical analysis
-Build a dashboard for security monitoring
-Explore Lambda Architecture in a cybersecurity context
-🎓 Skills Demonstrated
+CyberShield demonstrates a simplified security monitoring lifecycle:
+
+### 01 — Collect
+
+Security events are generated from the provided security dataset.
+
+### 02 — Stream
+
+Kafka distributes incoming security events through the real-time pipeline.
+
+### 03 — Process
+
+Spark Streaming processes events as they arrive.
+
+### 04 — Classify
+
+The detection pipeline applies security logic and machine-learning classification.
+
+### 05 — Store
+
+Detected threats are stored in Cassandra.
+
+### 06 — Monitor
+
+The dashboard provides a visual interface for monitoring detected security events.
+
+```text
+Collect
+   ↓
+Stream
+   ↓
+Process
+   ↓
+Classify
+   ↓
+Store
+   ↓
+Monitor
+```
+
+---
+
+# 🎓 Skills Demonstrated
 
 This project demonstrates practical experience in:
 
-Security monitoring
-Threat detection
-Real-time data processing
-Stream processing
-Batch processing
-Big Data architectures
-Kafka
-Spark Streaming
-Cassandra
-Machine learning
-Python
-Java
-React
-Docker
-Security data analysis
-🚀 Future Improvements
+### Cybersecurity
 
-Potential improvements include:
+* Security monitoring
+* Threat detection
+* Intrusion detection concepts
+* Security event analysis
+* Threat classification
 
-Add more attack detection rules
-Integrate additional threat intelligence sources
-Improve ML model evaluation
-Add precision, recall and F1-score monitoring
-Add alert severity levels
-Implement authentication for the dashboard
-Add historical threat visualizations
-Integrate a SIEM platform
-Add automated alert notifications
-Deploy the architecture in a cloud environment
-Add automated tests and CI/CD
-👩‍💻 Project
+### Big Data
 
-Developed as a cybersecurity and Big Data project at ENSA Agadir.
+* Real-time data processing
+* Stream processing
+* Batch processing
+* Distributed architectures
+* Lambda Architecture
+* Kafka
+* Spark Streaming
+* Cassandra
 
-Author: Assma MASRAFI
+### Machine Learning
 
-Areas of interest:
+* Security dataset preparation
+* Feature processing
+* Model training
+* Traffic classification
+* ML integration into detection workflows
 
-SOC • Blue Team • Threat Detection • SIEM • Big Data Security • Machine Learning
+### Software & Infrastructure
 
-⭐ Project Focus
+* Python
+* Java
+* React
+* Docker
+* Maven
+* Git / GitHub
 
-CyberShield demonstrates how real-time data processing and machine learning can support cybersecurity monitoring and threat detection.
+---
 
-Collect → Stream → Detect → Score → Store → Monitor
+# 🎯 What This Project Demonstrates
+
+Rather than focusing only on individual technologies, CyberShield demonstrates how several components can work together in a **security monitoring pipeline**.
+
+The project connects:
+
+```text
+Cybersecurity
+      +
+Big Data
+      +
+Machine Learning
+      +
+Distributed Systems
+      +
+Security Monitoring
+```
+
+This provides a practical foundation for exploring **SOC, Blue Team, SIEM, threat detection, and security analytics** use cases.
+
+---
+
+# 🚀 Future Improvements
+
+Potential improvements for a more production-oriented version include:
+
+## 🔎 Detection
+
+* Add additional attack detection rules
+* Integrate more threat intelligence sources
+* Improve threat classification
+* Add configurable detection thresholds
+
+## 🤖 Machine Learning
+
+* Evaluate multiple models
+* Track **precision, recall, and F1-score**
+* Add model performance monitoring
+* Improve feature engineering
+* Introduce continuous model evaluation
+
+## 📊 Monitoring
+
+* Add threat severity levels
+* Add historical threat visualizations
+* Add filtering by IP, attack type, and severity
+* Add real-time alert notifications
+
+## 🛡️ Security
+
+* Implement dashboard authentication
+* Add role-based access control
+* Secure API endpoints
+* Protect sensitive security data
+
+## ☁️ DevSecOps & Infrastructure
+
+* Integrate automated tests
+* Add CI/CD pipelines
+* Integrate security scanning
+* Deploy the architecture to a cloud environment
+* Explore integration with a SIEM platform
+
+---
+
+# 📚 References
+
+* Apache Kafka Documentation
+* Apache Spark Documentation
+* Apache Cassandra Documentation
+* Scikit-learn Documentation
+* Docker Documentation
+
+---
+
+# 👩‍💻 Author
+
+**Assma MASRAFI**
+
+Cybersecurity Engineering Student — **ENSA Agadir**
+
+### Areas of Interest
+
+`SOC` • `Blue Team` • `Threat Detection` • `SIEM` • `Big Data Security` • `Machine Learning`
+
+🔗 **GitHub:** [@asmamasrafi](https://github.com/asmamasrafi)
+
+---
+
+# ⭐ Project Focus
+
+CyberShield explores how **real-time data processing, distributed systems, and machine learning can support cybersecurity monitoring and threat detection**.
+
+```text
+┌──────────┐
+│  Collect │
+└────┬─────┘
+     ↓
+┌──────────┐
+│  Stream  │
+└────┬─────┘
+     ↓
+┌──────────┐
+│  Detect  │
+└────┬─────┘
+     ↓
+┌──────────┐
+│  Classify│
+└────┬─────┘
+     ↓
+┌──────────┐
+│  Store   │
+└────┬─────┘
+     ↓
+┌──────────┐
+│  Monitor │
+└──────────┘
+```
+
+**CyberShield — From security events to actionable monitoring insights.**
