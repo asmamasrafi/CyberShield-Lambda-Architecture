@@ -26,7 +26,7 @@ The project combines a **Speed Layer** for real-time detection with a **Batch La
              ▼
       Security Dashboard
 ```
-![CyberShield Lambda Architecture](docs/Architecture Lambda CyberShield pour la détection des menaces.png)
+![CyberShield Lambda Architecture](docs/ArchitectureLambda.png)
 ---
 
 # 🎯 Project Objectives
